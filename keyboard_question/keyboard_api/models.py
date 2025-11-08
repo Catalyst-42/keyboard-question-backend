@@ -1,8 +1,8 @@
 from django.db import models
-from django.contrib.postgres.fields import JSONField
+
 
 class Corpus(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=64)
     description = models.TextField(blank=True, null=True)
     unique_symbols = models.IntegerField()
     size = models.IntegerField()
@@ -11,18 +11,19 @@ class Corpus(models.Model):
         return self.name
 
 class Keyboard(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=256)
     description = models.TextField(blank=True, null=True)
-    form_factor = models.CharField(max_length=50)
+    form_factor = models.CharField(max_length=32)
     keys = models.IntegerField()
     rows = models.IntegerField()
     keyboard_model = models.FileField(upload_to='keyboard_models/')  # YAML
+    keyboard_preview = models.ImageField(upload_to='keyboard_previews/')
 
     def __str__(self):
         return self.name
 
 class Layout(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=256)
     description = models.TextField(blank=True, null=True)
     language = models.CharField(max_length=128)
     layout_model = models.FileField(upload_to='layout_models/')  # YAML
@@ -30,9 +31,22 @@ class Layout(models.Model):
     def __str__(self):
         return f"{self.name} ({self.language})"
 
-class Metric(models.Model):
-    corpus = models.ForeignKey(Corpus, on_delete=models.CASCADE)
+class LayoutPreview(models.Model):
     keyboard = models.ForeignKey(Keyboard, on_delete=models.CASCADE)
+    layout = models.ForeignKey(Layout, on_delete=models.CASCADE)
+
+    layout_preview = models.ImageField(upload_to='layout_previews/')
+    frequency_preview = models.ImageField(upload_to='frequency_previews/')
+
+    class Meta:
+        unique_together = ['layout', 'keyboard']
+
+    def __str__(self):
+        return f"{self.layout.name} on {self.keyboard.name}"
+
+class Metric(models.Model):
+    keyboard = models.ForeignKey(Keyboard, on_delete=models.CASCADE)
+    corpus = models.ForeignKey(Corpus, on_delete=models.CASCADE)
     layout = models.ForeignKey(Layout, on_delete=models.CASCADE)
 
     # Travel distance
@@ -69,18 +83,22 @@ class Metric(models.Model):
     row_usage_home = models.FloatField()
     row_usage_bottom = models.FloatField()
 
+    # Scissors (%)
+    scissor_bigrams_left_hand = models.FloatField()
+    scissor_bigrams_right_hand = models.FloatField()
+
     # Same finger bigrams (%)
     same_finger_bigrams_left_hand = models.FloatField()
     same_finger_bigrams_right_hand = models.FloatField()
-    
+
     # Alternating finger bigrams (%)
     alternating_finger_bigrams_left_hand = models.FloatField()
     alternating_finger_bigrams_right_hand = models.FloatField()
-    
+
     # Rolling (%)
     inrolls = models.FloatField()
     outrolls = models.FloatField()
-    
+
     def __str__(self):
         return f"Metric: {self.corpus.name} - {self.keyboard.name} - {self.layout.name}"
 

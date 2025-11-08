@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Corpus, Keyboard, Layout, Metric, Frequency, Bigramm
+from .models import Corpus, Keyboard, Layout, LayoutPreview, Metric, Frequency, Bigramm
 
 @admin.register(Corpus)
 class CorpusAdmin(admin.ModelAdmin):
@@ -17,6 +17,12 @@ class LayoutAdmin(admin.ModelAdmin):
     list_display = ['name', 'language']
     list_filter = ['language']
     search_fields = ['name', 'language']
+
+@admin.register(LayoutPreview)
+class LayoutPreviewAdmin(admin.ModelAdmin):
+    list_display = ['keyboard', 'layout']
+    list_filter = ['keyboard', 'layout']
+    search_fields = ['keyboard', 'layout']
 
 @admin.register(Metric)
 class MetricAdmin(admin.ModelAdmin):

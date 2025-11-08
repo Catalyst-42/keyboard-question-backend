@@ -21,6 +21,19 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from keyboard_api import views
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from rest_framework import permissions
+from keyboard_api.views import HealthCheckView
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Keyboard Metrics API",
+        default_version='v1',
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
 
 router = DefaultRouter()
 router.register(r'corpus', views.CorpusViewSet)
@@ -32,7 +45,13 @@ router.register(r'bigramms', views.BigrammViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path('api/', include(router.urls)),
+    path('api/health/', HealthCheckView.as_view(), name='health-check'),  
+
+    path('swagger<format>/', schema_view.without_ui(), name='schema-json'),
+    path('swagger/', schema_view.with_ui('swagger'), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc'), name='schema-redoc'),
 ]
 
 if settings.DEBUG:

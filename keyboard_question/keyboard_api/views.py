@@ -1,11 +1,19 @@
+from django.http import JsonResponse
+from django.views import View
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets, filters
+from rest_framework import filters, viewsets
 
 from .models import Bigramm, Corpus, Frequency, Keyboard, Layout, Metric
 from .serializers import (BigrammSerializer, CorpusSerializer,
                           FrequencySerializer, KeyboardSerializer,
                           LayoutSerializer, MetricSerializer)
 
+
+class HealthCheckView(View):
+    def get(self, request):
+        return JsonResponse({
+            'status': 'ok', 
+        }, status=200)
 
 class CorpusViewSet(viewsets.ModelViewSet):
     queryset = Corpus.objects.all()

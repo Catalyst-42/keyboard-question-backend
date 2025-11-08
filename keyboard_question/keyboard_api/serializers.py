@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Corpus, Keyboard, Layout, Metric, Frequency, Bigramm
+from .models import Corpus, Keyboard, Layout, LayoutPreview, Metric, Frequency, Bigramm
 
 class CorpusSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,6 +14,11 @@ class KeyboardSerializer(serializers.ModelSerializer):
 class LayoutSerializer(serializers.ModelSerializer):
     class Meta:
         model = Layout
+        fields = '__all__'
+
+class LayoutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LayoutPreview
         fields = '__all__'
 
 class MetricSerializer(serializers.ModelSerializer):
