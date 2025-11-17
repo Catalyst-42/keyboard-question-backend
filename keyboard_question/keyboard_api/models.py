@@ -58,8 +58,8 @@ class LayoutPreview(models.Model):
         return f"{self.layout.name} on {self.keyboard.name}"
 
 class Metric(models.Model):
-    keyboard = models.ForeignKey(Keyboard, on_delete=models.CASCADE)
     corpus = models.ForeignKey(Corpus, on_delete=models.CASCADE)
+    keyboard = models.ForeignKey(Keyboard, on_delete=models.CASCADE)
     layout = models.ForeignKey(Layout, on_delete=models.CASCADE)
 
     frequency_heatmap = models.ImageField(upload_to='frequency_heatmaps/')
@@ -76,11 +76,7 @@ class Metric(models.Model):
     travel_distance_finger_8 = models.FloatField()
     travel_distance_finger_9 = models.FloatField()
     travel_distance_finger_10 = models.FloatField()
-    
-    # Hand usage (%)
-    hand_usage_left_hand = models.FloatField()
-    hand_usage_right_hand = models.FloatField()
-    
+
     # Finger usage (%)
     finger_usage_1 = models.FloatField()
     finger_usage_2 = models.FloatField()
@@ -94,53 +90,42 @@ class Metric(models.Model):
     finger_usage_10 = models.FloatField()
 
     # Row usage (%)
-    row_usage_top = models.FloatField()
-    row_usage_home = models.FloatField()
-    row_usage_bottom = models.FloatField()
+    row_usage_k = models.FloatField()
+    row_usage_e = models.FloatField()
+    row_usage_d = models.FloatField()
+    row_usage_c = models.FloatField()
+    row_usage_b = models.FloatField()
+    row_usage_a = models.FloatField()
+
+    # SFB (%)
+    same_finger_bigram_frequency = models.FloatField()
+    same_finger_bigram_mean_distance = models.FloatField()
+
+    # SFS (%)
+    same_finger_skipgram_frequency = models.FloatField()
+    same_finger_skipgram_mean_distance = models.FloatField()
 
     # Scissors (%)
-    scissor_bigrams_left_hand = models.FloatField()
-    scissor_bigrams_right_hand = models.FloatField()
+    half_scissor_bigram_frequency = models.FloatField()
+    full_scissor_bigram_frequency = models.FloatField()
 
-    # Same finger bigrams (%)
-    same_finger_bigrams_left_hand = models.FloatField()
-    same_finger_bigrams_right_hand = models.FloatField()
+    half_scissor_skipgram_frequency = models.FloatField()
+    full_scissor_skipgram_frequency = models.FloatField()
 
-    # Alternating finger bigrams (%)
-    alternating_finger_bigrams_left_hand = models.FloatField()
-    alternating_finger_bigrams_right_hand = models.FloatField()
+    # LSB (%)
+    lateral_stretch_bigram_frequency = models.FloatField()
+    lateral_stretch_skipgram_frequency = models.FloatField()
 
-    # Rolling (%)
-    inrolls = models.FloatField()
-    outrolls = models.FloatField()
+    # Trigrams (%)
+    roll_frequency = models.FloatField()
+    alternate_frequency = models.FloatField()
+    onehand_frequency = models.FloatField()
+    redirect_frequency = models.FloatField()
 
     class Meta:
         verbose_name = 'метрика'
         verbose_name_plural = 'метрики'
+        unique_together = ['corpus', 'keyboard', 'layout']
 
     def __str__(self):
         return f"Metric: {self.corpus.name} - {self.keyboard.name} - {self.layout.name}"
-
-class Frequency(models.Model):
-    corpus = models.ForeignKey(Corpus, on_delete=models.CASCADE)
-    key = models.CharField(max_length=1)
-    entrances = models.IntegerField()
-
-    class Meta:
-        verbose_name = 'частота'
-        verbose_name_plural = 'частоты'
-
-    def __str__(self):
-        return f"{self.key}: {self.entrances} ({self.corpus.name})"
-
-class Bigramm(models.Model):
-    corpus = models.ForeignKey(Corpus, on_delete=models.CASCADE)
-    pair = models.CharField(max_length=2)
-    entrances = models.IntegerField()
-
-    class Meta:
-        verbose_name = 'биграмма'
-        verbose_name_plural = 'биграммы'
-
-    def __str__(self):
-        return f"{self.pair}: {self.entrances} ({self.corpus.name})"

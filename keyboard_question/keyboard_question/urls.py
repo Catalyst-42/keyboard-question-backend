@@ -15,16 +15,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from keyboard_api import views
-from drf_yasg.views import get_schema_view
+from django.contrib import admin
+from django.urls import include, path
+from django.views.generic import RedirectView
 from drf_yasg import openapi
-from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from keyboard_api import views
 from keyboard_api.views import HealthCheckView
+from rest_framework import permissions
+from rest_framework.routers import DefaultRouter
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -36,19 +37,22 @@ schema_view = get_schema_view(
 )
 
 router = DefaultRouter()
-router.register(r'corpus', views.CorpusViewSet)
+router.register(r'corpora', views.CorpusViewSet)
 router.register(r'keyboards', views.KeyboardViewSet)
 router.register(r'layouts', views.LayoutViewSet)
+router.register(r'layout_previews', views.LayoutPreviewViewSet)
 router.register(r'metrics', views.MetricViewSet)
-router.register(r'frequencies', views.FrequencyViewSet)
-router.register(r'bigramms', views.BigrammViewSet)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-
+    # API
+    path('', RedirectView.as_view(url='/api/', permanent=True)),
     path('api/', include(router.urls)),
     path('api/health/', HealthCheckView.as_view(), name='health-check'),  
 
+    # Admin
+    path('admin/', admin.site.urls),
+
+    # Docs
     path('swagger<format>/', schema_view.without_ui(), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger'), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc'), name='schema-redoc'),

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Corpus, Keyboard, Layout, LayoutPreview, Metric, Frequency, Bigramm
+from .models import Corpus, Keyboard, Layout, LayoutPreview, Metric
 
 @admin.register(Corpus)
 class CorpusAdmin(admin.ModelAdmin):
@@ -29,15 +29,3 @@ class MetricAdmin(admin.ModelAdmin):
     list_display = ['corpus', 'keyboard', 'layout', 'travel_distance']
     list_filter = ['corpus', 'keyboard', 'layout']
     search_fields = ['corpus__name', 'keyboard__name', 'layout__name']
-
-@admin.register(Frequency)
-class FrequencyAdmin(admin.ModelAdmin):
-    list_display = ['corpus', 'key', 'entrances']
-    list_filter = ['corpus']
-    search_fields = ['key', 'corpus__name']
-
-@admin.register(Bigramm)
-class BigrammAdmin(admin.ModelAdmin):
-    list_display = ['corpus', 'pair', 'entrances']
-    list_filter = ['corpus']
-    search_fields = ['pair', 'corpus__name']
