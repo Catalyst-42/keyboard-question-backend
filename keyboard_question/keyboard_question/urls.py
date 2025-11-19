@@ -40,7 +40,7 @@ router = DefaultRouter()
 router.register(r'corpora', views.CorpusViewSet)
 router.register(r'keyboards', views.KeyboardViewSet)
 router.register(r'layouts', views.LayoutViewSet)
-router.register(r'layout_previews', views.LayoutPreviewViewSet)
+router.register(r'layout-previews', views.LayoutPreviewViewSet)
 router.register(r'metrics', views.MetricViewSet)
 
 urlpatterns = [
