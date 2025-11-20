@@ -6,6 +6,7 @@ class Corpus(models.Model):
     description = models.TextField(blank=True, null=True)
     unique_symbols = models.IntegerField()
     size = models.IntegerField()
+    language = models.CharField(max_length=5)
 
     class Meta:
         verbose_name = 'корпус'

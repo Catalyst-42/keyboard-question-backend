@@ -3,7 +3,7 @@ from .models import Corpus, Keyboard, Layout, LayoutPreview, Metric
 
 @admin.register(Corpus)
 class CorpusAdmin(admin.ModelAdmin):
-    list_display = ['name', 'unique_symbols', 'size']
+    list_display = ['name', 'unique_symbols', 'size', 'language']
     search_fields = ['name']
 
 @admin.register(Keyboard)
