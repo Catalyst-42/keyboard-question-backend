@@ -18,6 +18,7 @@ class Corpus(models.Model):
 class Keyboard(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField(blank=True, null=True)
+    features = models.TextField(blank=True, null=True)
     form_factor = models.CharField(max_length=32)
     keys = models.IntegerField()
     rows = models.IntegerField()
@@ -65,7 +66,7 @@ class Metric(models.Model):
 
     frequency_heatmap = models.ImageField(upload_to='frequency_heatmaps/')
 
-    # Travel distance
+    # Travel distance (u)
     travel_distance = models.FloatField()
     travel_distance_finger_1 = models.FloatField()
     travel_distance_finger_2 = models.FloatField()

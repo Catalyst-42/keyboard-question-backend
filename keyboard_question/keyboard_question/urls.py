@@ -46,8 +46,9 @@ router.register(r'metrics', views.MetricViewSet)
 urlpatterns = [
     # API
     path('', RedirectView.as_view(url='/api/', permanent=True)),
-    path('api/', include(router.urls)),
+    path('api/metrics/extremes/', views.metrics_extremes, name='metrics-extremes'),
     path('api/health/', HealthCheckView.as_view(), name='health-check'),  
+    path('api/', include(router.urls)),
 
     # Admin
     path('admin/', admin.site.urls),

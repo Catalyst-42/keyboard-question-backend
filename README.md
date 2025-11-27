@@ -2,16 +2,16 @@
 Backend part of system for keyboard layout analysis. Made on Django REST Framework. Collects info about keyboard layouts and it's metrics. Uses PostgreSQL as backend database, creates Swagger and Redoc API documentation.
 
 > [!NOTE]  
-> Frontend is located on [separate repository](https://github.com/Catalyst-42/keyboard-question-frontend)
+> Frontend is located in [separate repository](https://github.com/Catalyst-42/keyboard-question-frontend)
 
 > [!NOTE]  
-> Analyzer is located on [separate repository](https://github.com/Catalyst-42/keyboard-question-analyzer)
+> Analyzer is located in [separate repository](https://github.com/Catalyst-42/keyboard-question-analyzer)
 
 ## Images
 | ![Admin panel](<img/KeyboardQuestion - Admin panel.png>) | ![Backend api](<img/KeyboardQuestion - Backend api.png>) |
 |-|-|
 
-## Initialization
+## Setup
 To use system you need to create PostgreSQL database:
 
 ```sql
@@ -65,4 +65,6 @@ Now you can find app on `localhost:8000`. Watch full list of urls on `http://loc
 TODO:
 - [x] Normal readme
 - [x] API keys in separate .env
+- [x] Quety to get min and max values of metrics
+- [ ] Make private POST queries
 -->
