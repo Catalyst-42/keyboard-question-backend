@@ -18,7 +18,6 @@ class Corpus(models.Model):
 class Keyboard(models.Model):
     name = models.CharField(max_length=256)
     description = models.TextField(blank=True, null=True)
-    features = models.TextField(blank=True, null=True)
     form_factor = models.CharField(max_length=32)
     keys = models.IntegerField()
     rows = models.IntegerField()
