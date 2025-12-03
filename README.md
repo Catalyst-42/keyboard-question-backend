@@ -63,8 +63,9 @@ Now you can find app on `localhost:8000`. Watch full list of urls on `http://loc
 
 <!-- 
 TODO:
+
 - [x] Normal readme
 - [x] API keys in separate .env
 - [x] Quety to get minand max values of metrics
-- [ ] Make private POST queries
+- [x] Make private POST queries
 -->
