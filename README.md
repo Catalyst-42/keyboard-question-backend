@@ -15,7 +15,13 @@ Backend part of system for keyboard layout analysis. Made on Django REST Framewo
 To use system you need to create PostgreSQL database:
 
 ```sql
+-- Database
 CREATE DATABASE keyboard_db;
+
+-- Create user for production
+CREATE USER keyboard_db_control_user WITH PASSWORD '******';
+GRANT ALL PRIVILEGES ON DATABASE keyboard_db TO keyboard_db_control_user;
+
 ```
 
 To run app you need to create `.env` file with app configuration. Example shown below:

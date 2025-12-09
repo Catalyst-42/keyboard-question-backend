@@ -5,3 +5,4 @@ media/
 
 # Environment files
 .env
+.env.production
