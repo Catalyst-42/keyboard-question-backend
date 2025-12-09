@@ -21,7 +21,8 @@ CREATE DATABASE keyboard_db;
 -- Create user for production
 CREATE USER keyboard_db_control_user WITH PASSWORD '******';
 GRANT ALL PRIVILEGES ON DATABASE keyboard_db TO keyboard_db_control_user;
-
+GRANT ALL ON SCHEMA public TO keyboard_db_user;
+GRANT CREATE ON SCHEMA public TO keyboard_db_user;
 ```
 
 To run app you need to create `.env` file with app configuration. Example shown below:
@@ -42,6 +43,10 @@ Also install all dependencies and appy common Django migrations.
 
 ```sh
 # Install requirements
+python3 -m venv venv
+source venv/bin/activate
+
+pip3 install --upgrade pip
 pip3 install -r requirements.txt
 
 # Apply migrations

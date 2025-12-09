@@ -34,6 +34,20 @@ DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['tauceti.nhost.me', 'localhost', '127.0.0.1']
 
+# Media and static
+if DEBUG:
+    URL_PREFIX = ''
+    MEDIA_ROOT = BASE_DIR / 'media'
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
+    MEDIA_URL = '/media/'
+    STATIC_URL = '/static/'
+else:
+    URL_PREFIX = 'keyboard-question-backend'
+    FORCE_SCRIPT_NAME = f'/{URL_PREFIX}'
+    MEDIA_ROOT = '/var/www/tauceti/keyboard-question-backend/media'
+    STATIC_ROOT = '/var/www/tauceti/keyboard-question-backend/static'
+    MEDIA_URL = f'/{URL_PREFIX}/media/'
+    STATIC_URL = f'/{URL_PREFIX}/static/'
 
 # Application definition
 
@@ -64,6 +78,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
+    "https://tauceti.nhost.me",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
@@ -89,7 +104,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'keyboard_question.wsgi.application'
 
-
 # Rest framework
 
 REST_FRAMEWORK = {
@@ -107,7 +121,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
@@ -121,7 +134,6 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -142,11 +154,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Media
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -162,11 +169,28 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Security
+# HTTPS Proxy settings
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://tauceti.nhost.me',
+]
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
+
+# CSRF cookie path
+CSRF_COOKIE_PATH = '/keyboard-question-backend/'
+SESSION_COOKIE_PATH = '/keyboard-question-backend/'

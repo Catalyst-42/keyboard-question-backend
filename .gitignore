@@ -6,3 +6,6 @@ media/
 # Environment files
 .env
 .env.production
+
+# Database dumps
+database.json

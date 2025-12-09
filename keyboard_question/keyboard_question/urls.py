@@ -26,6 +26,7 @@ from keyboard_api import views
 from keyboard_api.views import HealthCheckView
 from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
+from django.urls import reverse_lazy
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -45,10 +46,10 @@ router.register(r'metrics', views.MetricViewSet)
 
 urlpatterns = [
     # API
-    path('', RedirectView.as_view(url='/api/', permanent=True)),
+    path('', RedirectView.as_view(url=reverse_lazy('api-root'), permanent=True)),
     path('api/metrics/extremes/', views.metrics_extremes, name='metrics-extremes'),
     path('api/health/', HealthCheckView.as_view(), name='health-check'),  
-    path('api/', include(router.urls)),
+    path('api/', include(router.urls), name='api-root'),
 
     # Admin
     path('admin/', admin.site.urls),
