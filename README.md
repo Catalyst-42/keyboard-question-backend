@@ -79,4 +79,5 @@ TODO:
 - [x] API keys in separate .env
 - [x] Quety to get minand max values of metrics
 - [x] Make private POST queries
+- [ ] List all urls in api root: swagger, redoc, admin, metric limits
 -->

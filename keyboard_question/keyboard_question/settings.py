@@ -32,7 +32,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['tauceti.nhost.me', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['tauceti.nhost.me', 'keyboard-question-backend.vercel.app', 'localhost', '127.0.0.1']
 
 # Media and static
 if DEBUG:
@@ -44,8 +44,8 @@ if DEBUG:
 else:
     URL_PREFIX = 'keyboard-question-backend'
     FORCE_SCRIPT_NAME = f'/{URL_PREFIX}'
-    MEDIA_ROOT = '/var/www/tauceti/keyboard-question-backend/media'
-    STATIC_ROOT = '/var/www/tauceti/keyboard-question-backend/static'
+    MEDIA_ROOT = BASE_DIR / 'media'
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
     MEDIA_URL = f'/{URL_PREFIX}/media/'
     STATIC_URL = f'/{URL_PREFIX}/static/'
 
@@ -79,6 +79,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "https://tauceti.nhost.me",
+    "https://keyboard-question-backend.vercel.app",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
@@ -183,6 +184,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_TRUSTED_ORIGINS = [
     'https://tauceti.nhost.me',
+    'https://keyboard-question-backend.vercel.app',
 ]
 
 CSRF_COOKIE_SECURE = True
