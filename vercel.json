@@ -1,22 +1,30 @@
 {
-  "builds": [
-    {
-      "src": "keyboard_question/wsgi.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb",
-        "runtime": "python3.11"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/staticfiles/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "keyboard_question/wsgi.py"
-    }
-  ]
+    "version": 2,
+    "builds": [
+        {
+            "src": "keyboard_question/wsgi.py",
+            "use": "@vercel/python",
+            "config": {
+                "maxLambdaSize": "15mb",
+                "runtime": "python3.13"
+            }
+        },
+        {
+            "src": "build.sh",
+            "use":"@vercel/static-build",
+            "config":{
+                "distDir": "staticfiles"
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src":"/static/(.*)",
+            "dest":"/static/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "keyboard_question/wsgi.py"
+        }
+    ]
 }
