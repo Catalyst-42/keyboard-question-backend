@@ -45,7 +45,7 @@ else:
     URL_PREFIX = 'keyboard-question-backend'
     FORCE_SCRIPT_NAME = f'/{URL_PREFIX}'
     MEDIA_ROOT = BASE_DIR / 'media'
-    STATIC_ROOT = BASE_DIR / 'staticfiles'
+    STATIC_ROOT = BASE_DIR / 'staticfiles' / 'static'
     MEDIA_URL = f'/{URL_PREFIX}/media/'
     STATIC_URL = f'/{URL_PREFIX}/static/'
 
